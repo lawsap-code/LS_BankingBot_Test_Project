@@ -7,6 +7,11 @@ Run with: streamlit run web_app.py
 import streamlit as st
 from mistralai import Mistral
 from datetime import datetime
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Page configuration
 st.set_page_config(
@@ -131,7 +136,10 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # Initialize Mistral client
-API_KEY = "t8D9FaLjfluImZ7qAZ7EWPd3D5TxhBen"
+API_KEY = os.getenv("MISTRAL_API_KEY")
+if not API_KEY:
+    st.error("❌ Error: MISTRAL_API_KEY not found. Please set it in your .env file.")
+    st.stop()
 client = Mistral(api_key=API_KEY)
 
 # Banking bot system prompt

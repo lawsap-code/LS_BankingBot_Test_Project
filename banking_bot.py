@@ -6,9 +6,16 @@ This bot provides banking-related assistance and advice
 
 import os
 from mistralai import Mistral
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Initialize Mistral client with API key
-API_KEY = "t8D9FaLjfluImZ7qAZ7EWPd3D5TxhBen"
+API_KEY = os.getenv("MISTRAL_API_KEY")
+if not API_KEY:
+    print("❌ Error: MISTRAL_API_KEY not found. Please set it in your .env file.")
+    exit(1)
 client = Mistral(api_key=API_KEY)
 
 # System prompt for the banking bot
